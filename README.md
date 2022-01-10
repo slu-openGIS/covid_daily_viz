@@ -4,7 +4,10 @@
 
 This repository contains the data visualization and website creation scripts that power for the [Missouri COVID-19 Tracking Project](http://slu-opengis.github.io/covid_daily_viz/). The data set creation scripts have been separated as part of the conversion of the original code into a more modular, better documented set of resources. They can now be found in the [`MO_HEALTH_Covid_Tracking`](https://github.com/slu-openGIS/MO_HEALTH_Covid_Tracking) repository.
 
-As of 2020-09-04, earlier plots have been [archived](https://github.com/slu-openGIS/covid_daily_viz_archive). The archive covers the beginning of the project in late March 2020 through 2020-09-03.
+As of 2022-01-09, earlier plots are spread across two archival repositories:
+
+  * [2020-03-24 through 2021-09-03](https://github.com/slu-openGIS/covid_daily_viz_archive)
+  * [2021-09-04 through 2022-01-07](https://github.com/slu-openGIS/covid_daily_viz_archive_2)
 
 ## Using This Respository
 The following `R` packages are needed:
