@@ -25,7 +25,7 @@ county_focal <- c("29189", "29511", regional_geoids$ozark_mtns)
 top_case <- 50
 top_case_3wk <- 50
 
-round_peak <- 300
+round_peak <- 350
 custom_caption <- values$caption_text_census
 # custom_caption <- paste0(values$caption_text_census,"\nValues above 250 for Reynolds County truncated to increase readability")
 # custom_caption <- paste0(values$caption_text_census,"\nValues above 200 for Carter and Reynolds counties truncated to increase readability")

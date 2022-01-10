@@ -60,8 +60,8 @@ stl_values <- list(
   peak_x = -120, 
   peak_y = 800, 
   current_x = values$regional_current_x, 
-  current_y = -2000,
-  current_display = FALSE
+  current_y = -8000,
+  current_display = TRUE
 )
 
 ## tables

@@ -84,11 +84,12 @@ county_subset <- mutate(county_subset, case_avg_rate = ifelse(case_avg_rate < 0,
 #  case_avg_rate = ifelse(geoid == 29119 & 
 #                           (report_date >= "2020-06-22" & report_date <= "2020-06-30"), NA, case_avg_rate))
 
-county_subset <- mutate(county_subset,
-                        case_avg_rate = ifelse(geoid == 29119 & 
-                                                 (report_date == "2020-06-25" | report_date == "2020-06-29"), 200, case_avg_rate), # 180-320
-                        case_avg_rate = ifelse(geoid == 29119 & 
-                                                 (report_date >= "2020-06-26" & report_date <= "2020-06-28"), NA, case_avg_rate))
+# county_subset <- mutate(county_subset,
+#                        case_avg_rate = ifelse(geoid == 29119 & 
+#                                                 (report_date == "2020-06-25" | report_date == "2020-06-29"), 200, case_avg_rate), # 180-320
+#                        case_avg_rate = ifelse(geoid == 29119 & 
+#                                                  (report_date >= "2020-06-26" & report_date <= "2020-06-28"), NA, case_avg_rate))
+
 ### Joplin
 # county_subset <- mutate(county_subset,
 #   case_avg_rate = ifelse(geoid == 29512 & 
@@ -97,12 +98,12 @@ county_subset <- mutate(county_subset,
 #                            (report_date == "2020-10-05"), NA, case_avg_rate))
 
 ### Dade County
-county_subset <- mutate(county_subset,
-   case_avg_rate = ifelse(geoid == 29057 & 
-                            (report_date == "2020-11-11" | report_date == "2020-11-17"), 200, case_avg_rate), # 255-312
-   case_avg_rate = ifelse(geoid == 29057 & 
-                            (report_date >= "2020-11-12" & report_date <= "2020-11-16"), NA, case_avg_rate)
-)
+# county_subset <- mutate(county_subset,
+#   case_avg_rate = ifelse(geoid == 29057 & 
+#                            (report_date == "2020-11-11" | report_date == "2020-11-17"), 200, case_avg_rate), # 255-312
+#   case_avg_rate = ifelse(geoid == 29057 & 
+#                            (report_date >= "2020-11-12" & report_date <= "2020-11-16"), NA, case_avg_rate)
+# )
 
 ## define top_val
 top_val <- round_any(x = max(county_subset$case_avg_rate, na.rm = TRUE), accuracy = top_case, f = ceiling)
