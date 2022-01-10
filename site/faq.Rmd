@@ -1,0 +1,154 @@
+---
+title: "Frequently Asked Questions"
+output: 
+  html_document:
+    toc: true
+    toc_depth: 2
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+# dependencies
+library(dplyr)
+library(leaflet)
+library(RColorBrewer)
+library(sf)
+
+# load data
+snapshot <- st_read(here::here("data", "MO_HEALTH_Covid_Tracking", "data", "county", "daily_snapshot_mo_xl.geojson"), crs = 4326,
+                    stringsAsFactors = FALSE)
+
+# create list with vectors of metro counties by GEOID
+metro_counties <- list(
+  cape_girardeau = c("29031", "29017", "17003"),
+  columbia = c("29019", "29007", "29175", "29053", "29089"),
+  jeff_city = c("29051", "29027", "29135", "29151"),
+  joplin = c("29097", "29145", "29512", "40115"),
+  kansas_city = c("20091", "20103", "20107", "20121", "20209",
+                  "29013", "29025", "29037", "29047", "29049", 
+                  "29095", "29107", "29165", "29177", "29511"),
+  springfield = c("29077", "29043", "29225", "29167", "29225"),
+  st_joseph = c("29003", "29021", "29063", "20043"),
+  st_louis = c("17005", "17013", "17027", "17083", "17117", 
+               "17119", "17133", "17163", "29071", "29099", 
+               "29113", "29183", "29189", "29219", "29510")
+)
+
+# prep data
+snapshot %>%
+  select(GEOID, county, state, total_pop) %>%
+  mutate(metro = case_when(
+    GEOID %in% metro_counties$cape_girardeau ~ "Cape Girardeau",
+    GEOID %in% metro_counties$columbia ~ "Columbia",
+    GEOID %in% metro_counties$jeff_city ~ "Jefferson City",
+    GEOID %in% metro_counties$joplin ~ "Joplin",
+    GEOID %in% metro_counties$kansas_city ~ "Kansas City",
+    GEOID %in% metro_counties$springfield ~ "Springfield",
+    GEOID %in% metro_counties$st_joseph ~ "St. Joseph",
+    GEOID %in% metro_counties$st_louis ~ "St. Louis"
+  )) %>%
+  filter(is.na(metro) == FALSE) -> snapshot
+```
+
+## Where Do These Data Come From?
+Data for this site is compiled from a number of sources on a daily basis:
+
+  1. County and state COVID-19 data - the <a href="https://nytimes.com" target="_blank">New York Times'</a> <a href="https://github.com/nytimes/covid-19-data" target="_blank">COVID-19 Project</a>
+  2. State health disparities data - the <a href="https://health.mo.gov/living/healthcondiseases/communicable/novel-coronavirus/" target="_blank">Missouri Department of Health and Senior Services</a>
+  3. St. Louis area health disparities data - the <a href="https://www.stlouis-mo.gov/covid-19/data/index.cfm" target="_blank">City of St. Louis</a> and <a href="https://stlcorona.com/resources/covid-19-statistics1/" target="_blank">St. Louis County</a>
+  4. St. Louis area zip code data:
+      * Franklin County
+      * <a href="https://www.jeffcohealth.org/covid19-data" target="_blank">Jefferson County</a>
+      * <a href="https://experience.arcgis.com/experience/61207258c1f243cabcec743c23064fa6" target="_blank">Lincoln County</a>
+      * <a href="https://www.sccmo.org/2105/COVID-19" target="_blank">St. Charles County</a>
+      * <a href="https://www.stlouis-mo.gov/covid-19/data/index.cfm" target="_blank">St. Louis City</a>
+      * <a href="https://stlcorona.com/resources/covid-19-statistics1/" target="_blank">St. Louis County</a>
+      * <a href="https://www.dph.illinois.gov/covid19/covid19-statistics" target="_blank">State of Illinois</a>
+      * <a href="https://www.warrencountyhealth.com/covid-19-dashboard/" target="_blank">Warren County</a>
+  5. St. Louis area hospitalization data - the <a href="https://www.facebook.com/StLouisMetropolitanPandemicTaskForce/" target="_blank">St. Louis Metropolitan Pandemic Task Force</a>
+  6. Kansas City area zip code data:
+      * <a href="https://experience.arcgis.com/experience/34f9ef5e486b4ef3a0a1364c457944bb/page/page_1/" target="_blank">Clay County</a>
+      * <a href="https://jacohd.org/data-dashboard/" target="_blank">Jackson County</a>
+      * <a href="https://viz.jocogov.org/t/Public/views/JohnsonCountyKS-COVID-19Update/Dashboard?:isGuestRedirectFromVizportal=y&:embed=y" target="_blank">Johnson County</a>
+      * <a href="https://data.kcmo.org/Health/COVID-19-Data-by-ZIP-Code/374j-h7xt" target="_blank">Kansas City</a>
+      * <a href="https://www.plattecountyhealthdept.com/emergency.aspx" target="_blank">Platte County</a>
+      * <a href="https://wyandotte-county-covid-19-hub-unifiedgov.hub.arcgis.com" target="_blank">Wyandotte County</a>
+  7. Demographic data - the U.S. Census Bureau's American Community Survey 5-year estimates (2014-2018)
+  
+See the [Technical Notes page](data.html) for additional details.
+
+## Why Do Numbers Not Match? {.padtop}
+Due to lags in reporting, both at the public health department level and at the New York Times itself, case and mortality numbers may lag behind other figures reported in the media. At the same time, because the New York Times obtains data from multiple sources, some case and mortality numbers may actually be higher than what is reported by the state.
+
+## What Are Probable Cases? {.padtop}
+On May 6th, the New York Times began including probable cases - those without a confirmatory test result but where symptoms indicate a COVID-19 infection. Not all counties report probable cases, however.
+
+## What are Per Capita Rates? {.padtop}
+In order to compare rates across neighborhoods, cities, states, or countries, use utilize per capita statistics. When we calculate a "rate per capita" or a "per capita rate," we take our rate and multiply it by a set number of individuals. This helps us ensure that our data are expressed relative to the size of the population they describe. For example, we typically calculate infant mortality rate by multiplying a given jurisdiction's rate by 1,000. In the United States, we typically calculate per capita crime rates by taking a city’s or state’s rate, and multiplying it by 100,000. 
+
+Calculating rates is particularly important for mapping these quantities. This is sometimes called "normalization" by cartographers. By ensuring that we adjust the values mapped for the number of people in a given area, we ensure that our map is not just reflecting variations in population between jurisdictions.
+
+## What are Log Plots? {.padtop}
+The website Datawrapper has a <a href="https://blog.datawrapper.de/weeklychart-logscale/" target="_blank">great explainer</a> on how to read log plots. The key takeaway from their explanation is that "Log scales show relative values instead of absolute ones." Instead of showing absolute change, they show us the *rate* at which change happens. These are useful for comparing how COVID-19, for example, spreads between multiple counties. The steeper the line for a particular jurisdiction, the faster the rate of growth.
+
+## What are Rolling Averages? {.padtop}
+A rolling average is a technique for calculating an average for values for different "windows." All of the plots on this site use a seven day rolling average, meaning that the the value of a given day's average is calculated from the prior seven days' values. This has the effect of "smoothing" out large daily variations, for example, in the number of new COVID cases or hospitalizations reported. Doing so gives us a better sense of the trend - if cases climbing or falling, for example.
+
+## Why Do You Treat Joplin and Kansas City as Counties? {.padtop}
+Since both cities have their own health departments, and straddle multiple counties, both the State of Missouri and the New York Times have been releasing data on infections and deaths exclusive of the counties they lie in. This has been true for Kansas City since the beginning of the pandemic, and true for Joplin since June 25th. I have adjusted the populations for both the cities themselves and the surrounding counties to provide accurate per capita rates, and have also created maps that show Joplin and Kansas City as their own entities.
+
+## What is a Metropolitan Statistical Area? {.padtop}
+A Metropolitan Statistical Area, or a "MSA," is a region defined by the U.S. Office of Management and Budget with the U.S. Census Bureau:
+
+> The general concept of a metropolitan or micropolitan statistical area is that of a core area containing a substantial population nucleus, together with adjacent communities having a high degree of economic and social integration with that core. 
+
+You can read more about MSAs on the <a href="https://www.census.gov/programs-surveys/metro-micro/about.html" target="_blank">Census Bureau's website</a>.
+
+This site uses these pre-existing definitions for all data involving "metro" areas, with the county-equivalents for [Joplin and Kansas City](#Why_Do_You_Treat_Joplin_and_Kansas_City_as_Counties) added to their respective metros. There are a total of eight MSAs in Missouri, several of which include counties in adjacent states:
+
+  1. Cape Girardeau, MO-IL Metro Area
+  2. Columbia, MO Metro Area
+  3. Jefferson City, MO Metro Area
+  4. Joplin, MO Metro Area
+  5. Kansas City, MO-KS Metro Area
+  6. Springfield, MO Metro Area
+  7. St. Joseph, MO-KS Metro Area
+  8. St. Louis, MO-IL Metro Area
+
+<br>
+
+```{r msa-map, echo=FALSE, out.width = '100%'}
+# define colors
+pal <- brewer.pal(n = 8, name = "Set1")
+pal[6] <- "#FFD60C"
+pal <- c(pal[6], pal[3], pal[4], pal[7], pal[2], pal[5], pal[8], pal[1])
+factpal <- colorFactor(pal, as.factor(snapshot$metro))
+
+# create map
+snapshot %>%
+  leaflet() %>%
+  setView(lat = 38.497191, lng = -92.631555, zoom = 6) %>%
+  addProviderTiles(providers$Esri.WorldStreetMap) %>%
+  addPolygons(
+    weight = 1, 
+    opacity = 1.0, 
+    smoothFactor = 0.5,
+    fillOpacity = 0.75,
+    color = ~factpal(metro),
+    highlightOptions = highlightOptions(color = "white", weight = 2, bringToFront = TRUE),
+    popup = paste("<b>County:</b> ", snapshot$county, "<br>",
+                           "<b>State:</b> ", snapshot$state, "<br>",
+                           "<b>Metropolitan Statistical Area:</b> ", snapshot$metro, "<br>",
+                           "<b>Total Population (2018):</b> ", snapshot$total_pop)
+  ) %>%
+  addLegend(pal = factpal, values = snapshot$metro, opacity = .75, title = "Metropolitan Areas")
+```
+
+## Can I Reuse Your Data or Graphics? {.padtop}
+Absolutely! All code, data, website content, and images are available under a CC-BY 4.0 license. This means that you can use these data and graphics as long as you tell your audience where they came from. Graphics should not be altered to remove the caption that indicates who made them and where the underlying data came from.
+
+## How Do I Download Your Data? {.padtop}
+The easiest way to download them is to go to the <a href="https://github.com/slu-openGIS/covid_daily_viz" target="_blank">GitHub repository</a> for this project and click on the green `Code` button. The menu that appears will give you an option to download a `.zip` file that contains all of the clean data and most of the raw data (in the `data/` folder).
+
+## How Do I Download Your Graphics? {.padtop}
+Low resolution version of the graphics can be downloaded one at a time from the website by right clicking on them. If you want to download them all at once, or download the high resolution versions, follow the same process for downloading the data from <a href="https://github.com/slu-openGIS/covid_daily_viz" target="_blank">GitHub</a> (see above). The images will be in the `results/` folder.

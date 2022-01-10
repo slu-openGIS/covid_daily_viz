@@ -1,0 +1,212 @@
+---
+title: "Health Disparities"
+output: 
+  html_document:
+    toc: true
+    toc_depth: 2
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+# dependencies
+library(dplyr)
+library(readr)
+library(sf)
+
+# load data
+state_data <- read_csv(here::here("data", "MO_HEALTH_Covid_Tracking", "data", "individual", "mo_race_rates.csv"))
+stl_race <- read_csv(here::here("data", "MO_HEALTH_Covid_Tracking", "data", "individual", "stl_race_rates.csv"))
+stl_race_gender <- read_csv(here::here("data", "MO_HEALTH_Covid_Tracking", "data", "individual", "stl_race_gender_rates.csv"))
+
+race_vax <- read_csv(here::here("data", "MO_HEALTH_Covid_Tracking", "data",
+                                 "individual", "mo_vaccine_race_rates.csv"),
+                     col_types = cols(report_date = col_date(format = "")))
+```
+
+One striking facet of the COVID-19 outbreak is the effect it has had on communities that have been historically been marginalized in the United States, including African Americans, indigenous nations (the Navajo Nation has one of the <a href="https://www.npr.org/2020/04/24/842945050/navajo-nation-sees-high-rate-of-covid-19-and-contact-tracing-is-a-challenge" target="_blank">highest infection rates in country</a>), and people incarcerated in jails/prisons. What ties these groups together is not inherent biological risk. Rather, disinvestment at the community level means the agencies and organizations that serve these communities often lack the resources needed to prevent the spread of infectious disease. This is long-standing social and health disparities that potentially leave individuals more susceptible to severe illness.
+
+## Statewide {.tabset .tabset-fade .tabset-pills .padtop}
+These plots show patterns in infections and mortality by race and ethnicity for the entirety of Missouri.
+
+### Infections
+
+```{r mo-infections, echo=FALSE, out.width = '100%'}
+knitr::include_graphics("img/mo_individual/a_race_case.png")
+```
+
+Download: [<a href="https://raw.githubusercontent.com/slu-openGIS/covid_daily_viz/master/results/high_res/mo_individual/a_race_case.png" target="_blank">High-res</a>] [<a href="https://raw.githubusercontent.com/slu-openGIS/covid_daily_viz/master/results/low_res/mo_individual/a_race_case.png" target="_blank">Low-res</a>]
+
+### Mortality
+
+```{r mo-mortality, echo=FALSE, out.width = '100%'}
+knitr::include_graphics("img/mo_individual/b_race_mortality.png")
+```
+
+Download: [<a href="https://raw.githubusercontent.com/slu-openGIS/covid_daily_viz/master/results/high_res/mo_individual/b_race_mortality.png" target="_blank">High-res</a>] [<a href="https://raw.githubusercontent.com/slu-openGIS/covid_daily_viz/master/results/low_res/mo_individual/b_race_mortality.png" target="_blank">Low-res</a>]
+
+### Data Table
+
+```{r state-table, echo=FALSE, out.width = '100%'}
+state_data %>%
+  select(value, cases_est, case_rate, deaths_est, mortality_rate) %>% 
+  mutate(
+    cases_est = round(cases_est, digits = 0), 
+    case_rate = round(case_rate, digits = 2),
+    deaths_est = round(deaths_est, digits = 0),
+    mortality_rate = round(mortality_rate, digits = 2)
+  ) %>%
+  rename(
+    Identity = value,
+    `Estimated Cases` = cases_est, 
+    `Cases Per Capita` = case_rate,
+    `Estimated Deaths` = deaths_est,
+    `Deaths Per Capita` = mortality_rate
+  ) -> data_table
+
+DT::datatable(data_table, rownames= FALSE)
+```
+
+### Notes
+
+  * The underlying data for these plots are available from [GitHub](faq.html#How_Do_I_Download_Your_Data) in the `mo_race_rates.csv` table, which is assembled from data provided by the [State of Missouri](faq.html#Where_Do_These_Data_Come_From).
+  * The FAQ contains a short explanation of [per-capita rates](faq.html#What_are_Per_Capita_Rates). Note that the rates presented for statewide data are per 100,000 individuals.
+  * The State of Missouri does not release actual counts for individuals, so these rates are estimated using the current number of positive cases and the percentages provided by the State on their dashboard.
+  * Rates for other racial identities are combined into an 'other' category, which cannot be easily converted to a rate and so is not included here.
+  * The Latino category is not exclusive of the racial identities shown.
+  * There is a significant amount of missing data, typically around 16% to 20% on a given day.
+
+## Statewide Vaccinations {.tabset .tabset-fade .tabset-pills .padtop}
+Missouri currently releases data on race and ethnicity based on the number of people who have initiated or completed vaccinations. Initiated means individuals have received an initial dose of the Moderna or Pfizer vaccines, or the single dose of the Johnson & Johnson vaccine. Completed means individuals have received *both* doses of the Moderna or Pfizer vaccines, or the single dose of the Johnson & Johnson vaccine.
+
+### Initiated Vaccinations
+
+```{r static-initiated, echo=FALSE, out.width = '100%'}
+knitr::include_graphics("img/mo_individual/c_race_vaccine_initiated.png")
+```
+
+Download: [<a href="https://raw.githubusercontent.com/slu-openGIS/covid_daily_viz/master/results/high_res/mo_individual/c_race_vaccine_initiated.png" target="_blank">High-res</a>] [<a href="https://raw.githubusercontent.com/slu-openGIS/covid_daily_viz/master/results/low_res/mo_individual/c_race_vaccine_initiated.png" target="_blank">Low-res</a>]
+
+### Completed Vaccinations
+
+```{r static-completed, echo=FALSE, out.width = '100%'}
+knitr::include_graphics("img/mo_individual/c_race_vaccine_completed.png")
+```
+
+Download: [<a href="https://raw.githubusercontent.com/slu-openGIS/covid_daily_viz/master/results/high_res/mo_individual/c_race_vaccine_completed.png" target="_blank">High-res</a>] [<a href="https://raw.githubusercontent.com/slu-openGIS/covid_daily_viz/master/results/low_res/mo_individual/c_race_vaccine_completed.png" target="_blank">Low-res</a>]
+
+### Data Table
+
+```{r state-vax-table, echo=FALSE, out.width = '100%'}
+race_vax %>%
+  select(value, initiated, initiated_rate, completed, completed_rate) %>%
+  filter(value %in% c("Two or More") == FALSE) %>%
+  arrange(desc(initiated_rate)) %>% 
+  mutate(initiated_rate = round(initiated_rate, digits = 0)) %>%
+  mutate(completed_rate = round(completed_rate, digits = 0)) %>%
+  rename(
+    Identity = value,
+    `Cumulative Initiated Vaccinations` = initiated,
+    `Initiated Rate per 1,000` = initiated_rate,
+    `Cumulative Completed Vaccinations` = completed,
+    `Completed Rate per 1,000` = completed_rate
+  ) -> data_table
+
+DT::datatable(data_table, rownames= FALSE)
+```
+
+## St. Louis {.padtop}
+Within the St. Louis region, I am currently tracking disparities data only for St. Louis City and County.
+
+### Race {.tabset .tabset-fade .tabset-pills .padtop}
+These plots show patterns in infections and mortality by race and ethnicity for St. Louis City and County. Data for St. Louis City and County are not displayed jointly, and so these plots are unique in their comparative presentation of disparities between St. Louis City and County.
+
+#### Infections
+
+```{r stl-race-infections, echo=FALSE, out.width = '100%'}
+knitr::include_graphics("img/stl_individual/a_race_case.png")
+```
+
+Download: [<a href="https://raw.githubusercontent.com/slu-openGIS/covid_daily_viz/master/results/high_res/stl_individual/a_race_case.png" target="_blank">High-res</a>] [<a href="https://raw.githubusercontent.com/slu-openGIS/covid_daily_viz/master/results/low_res/stl_individual/a_race_case.png" target="_blank">Low-res</a>]
+
+#### Mortality
+
+```{r stl-race-mortality, echo=FALSE, out.width = '100%'}
+knitr::include_graphics("img/stl_individual/b_race_mortality.png")
+```
+
+Download: [<a href="https://raw.githubusercontent.com/slu-openGIS/covid_daily_viz/master/results/high_res/stl_individual/b_race_mortality.png" target="_blank">High-res</a>] [<a href="https://raw.githubusercontent.com/slu-openGIS/covid_daily_viz/master/results/low_res/stl_individual/b_race_mortality.png" target="_blank">Low-res</a>]
+
+#### Data Table
+
+```{r stl-race-table, echo=FALSE, out.width = '100%'}
+stl_race %>%
+  select(county, value, cases, case_rate, deaths, mortality_rate) %>%
+  mutate(
+    case_rate = round(case_rate, digits = 2),
+    mortality_rate = round(mortality_rate, digits = 2)
+  ) %>%
+  rename(
+    County = county,
+    Identity = value,
+    `Cumulative Cases` = cases,
+    `Cases Per Capita` = case_rate,
+    `Cumulative Deaths` = deaths,
+    `Deaths Per Capita` = mortality_rate
+  ) -> data_table
+
+DT::datatable(data_table, rownames= FALSE)
+```
+
+#### Notes
+
+  * The underlying data for these plots are available from [GitHub](faq.html#How_Do_I_Download_Your_Data) in the `stl_race_rates.csv` table, which is assembled from data provided by the [City of St. Louis and St. Louis County](faq.html#Where_Do_These_Data_Come_From).
+  * The FAQ contains a short explanation of [per-capita rates](faq.html#What_are_Per_Capita_Rates).
+
+### Race and Gender {.tabset .tabset-fade .tabset-pills .padtop}
+These plots show patterns in infections and mortality by race and gender for St. Louis City.
+
+#### Infections
+
+```{r stl-race-gender-infections, echo=FALSE, out.width = '100%'}
+knitr::include_graphics("img/stl_individual/c_race_sex_case.png")
+```
+
+Download: [<a href="https://raw.githubusercontent.com/slu-openGIS/covid_daily_viz/master/results/high_res/stl_individual/c_race_sex_case.png" target="_blank">High-res</a>] [<a href="https://raw.githubusercontent.com/slu-openGIS/covid_daily_viz/master/results/low_res/stl_individual/c_race_sex_case.png" target="_blank">Low-res</a>]
+
+#### Mortality
+
+```{r stl-race-gender-mortality, echo=FALSE, out.width = '100%'}
+knitr::include_graphics("img/stl_individual/d_race_sex_mortality.png")
+```
+
+Download: [<a href="https://raw.githubusercontent.com/slu-openGIS/covid_daily_viz/master/results/high_res/stl_individual/d_race_sex_mortality.png" target="_blank">High-res</a>] [<a href="https://raw.githubusercontent.com/slu-openGIS/covid_daily_viz/master/results/low_res/stl_individual/d_race_sex_mortality.png" target="_blank">Low-res</a>]
+
+#### Data Table
+
+```{r stl-race-gender-table, echo=FALSE, out.width = '100%'}
+stl_race_gender %>%
+  select(county, sex, value, cases, case_rate, deaths, mortality_rate) %>%
+  mutate(
+    case_rate = round(case_rate, digits = 2),
+    mortality_rate = round(mortality_rate, digits = 2)
+  ) %>%
+  rename(
+    County = county,
+    Gender = sex,
+    Identity = value,
+    `Cumulative Cases` = cases,
+    `Cases Per Capita` = case_rate,
+    `Cumulative Deaths` = deaths,
+    `Deaths Per Capita` = mortality_rate
+  ) -> data_table
+
+DT::datatable(data_table, rownames= FALSE)
+```
+
+#### Notes
+
+  * The underlying data for these plots are available from [GitHub](faq.html#How_Do_I_Download_Your_Data) in the `stl_race_gender_rates.csv` table, which is assembled from data provided by the [City of St. Louis](faq.html#Where_Do_These_Data_Come_From).
+  * The FAQ contains a short explanation of [per-capita rates](faq.html#What_are_Per_Capita_Rates).
+

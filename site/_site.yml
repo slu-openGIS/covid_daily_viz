@@ -1,0 +1,20 @@
+name: "covid_daily_viz"
+navbar:
+  title: "Tracking COVID-19 in Missouri"
+  left:
+    - text: "Home"
+      href: index.html
+    - text: "About"
+      href: about.html
+    - text: "FAQ"
+      href: faq.html      
+    - text: "Technical Notes"
+      href: data.html
+output:
+  html_document:
+    theme: flatly
+    highlight: textmate
+    include:
+      before_body: header.html
+      after_body: footer.html
+    css: styles.css
