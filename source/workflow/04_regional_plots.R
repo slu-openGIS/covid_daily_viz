@@ -32,9 +32,9 @@ state_values <- list(
     max(),
   peak_x = -120, # 0
   peak_y = 200, # 400
-  current_x = 0, # -105
+  current_x = values$state_current_x, # -105
   current_y = values$state_current_y, # 1000
-  current_display = FALSE
+  current_display = TRUE
 )
 
 ## tables
@@ -87,8 +87,8 @@ kc_values <- list(
   peak_x = -170, 
   peak_y = 2600, 
   current_x = values$regional_current_x, 
-  current_y = -2000,
-  current_display = FALSE
+  current_y = -5000,
+  current_display = TRUE
 )
 
 ## tables
@@ -114,8 +114,8 @@ os_values <- list(
   peak_x = -170, 
   peak_y = 2600, 
   current_x = values$regional_current_x, 
-  current_y = -3000,
-  current_display = FALSE
+  current_y = -5000,
+  current_display = TRUE
 )
 
 ## tables
