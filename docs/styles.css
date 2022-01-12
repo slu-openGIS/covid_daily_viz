@@ -1,0 +1,36 @@
+.column {
+  float: left;
+  width: 33.33%;
+  text-align: center;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+@media screen and (max-width: 600px) {
+  .column {
+    width: 100%;
+  }
+}
+
+.padtop{
+  margin-top: 3em;
+}
+
+.alert {
+  padding: 20px;
+  background-color: #f44336; /* Red */
+  color: white;
+  margin-bottom: 15px;
+}
+
+.note {
+  padding: 20px;
+  background-color: #4336f4; /* Blue */
+  color: white;
+  margin-bottom: 15px;
+}
