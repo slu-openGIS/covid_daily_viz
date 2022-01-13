@@ -66,7 +66,7 @@ save_plots(filename = "results/low_res/stl_metro/n_new_in_pt.png", plot = p, pre
 # plot in patient
 
 ## define top_val
-top_val <- round_any(x = max(stl_hosp$in_pt, na.rm = TRUE), accuracy = 50, f = ceiling)
+top_val <- round_any(x = max(stl_hosp$in_pt, na.rm = TRUE), accuracy = 100, f = ceiling)
 
 ## subset
 stl_hosp %>%
@@ -96,7 +96,7 @@ p <- ggplot() +
              size = 4, show.legend = FALSE) +
   scale_colour_manual(values = cols, name = "Measure") +
   scale_x_date(date_breaks = hosp_breaks, date_labels = "%b") +
-  scale_y_continuous(limits = c(0, top_val), breaks = seq(0, top_val, by = 50)) + 
+  scale_y_continuous(limits = c(0, top_val), breaks = seq(0, top_val, by = 100)) + 
   labs(
     title = "Total COVID-19 Hospitalizations in Metro St. Louis",
     subtitle = paste0("St. Louis Metropolitan Pandemic Task Force Hospitals\n", min(stl_subset$report_date), " through ", as.character(date)),

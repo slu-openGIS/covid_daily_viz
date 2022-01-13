@@ -34,7 +34,7 @@ county_focal <- c("29510", "29189", "29183", "17133", "17027", "17163",
                   "29099", "17119", "29071", "29113", "29219", "17005")
 
 # define top_val new case rate plots
-top_case <- 50
+top_case <- 100
 top_case_3wk <- 50
 
 ## create points

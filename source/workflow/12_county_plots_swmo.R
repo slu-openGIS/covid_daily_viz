@@ -132,10 +132,10 @@ p <- facet_rate(county_subset,
                 plot_date = values$plot_date,
                 date = values$date,
                 title = "Pace of New COVID-19 Cases in Select Missouri Counties",
-                caption = paste0(values$caption_text_census,"\nValues above 200 for Dade and McDonald counties truncated to increase readability"))
+                caption = values$caption_text_census)
 
+# paste0(values$caption_text_census,"\nValues above 200 for Dade and McDonald counties truncated to increase readability")
 # paste0(values$caption_text_census,"\nValues above 160 for Joplin City as well as Dade and McDonald counties truncated to increase readability")
-# values$caption_text_census)
 
 ## save plot
 save_plots(filename = "results/high_res/county_swmo/e_new_case.png", plot = p, preset = "lg")
