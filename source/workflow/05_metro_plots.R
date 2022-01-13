@@ -27,7 +27,7 @@ metro_points <- filter(metro_data, report_date == values$date)
 metro_subset <- filter(metro_data, report_date >= values$plot_date)
 
 ## define top_val
-top_val <- round_any(x = max(metro_subset$case_rate), accuracy = 10, f = ceiling)
+top_val <- round_any(x = max(metro_subset$case_rate), accuracy = 20, f = ceiling)
 
 ## create factors
 metro_subset <- mutate(metro_subset, factor_var = fct_reorder2(short_name, report_date, case_rate))
@@ -301,5 +301,5 @@ save_plots(filename = "results/low_res/metro/m_case_fatality_rate.png", plot = p
 # =============================================================================
 
 # clean-up
-rm(metro_data, metro_subset, metro_points)
+rm(metro_data, metro_subset, metro_points, metro_day_points)
 rm(top_val, p)
