@@ -91,3 +91,7 @@ commit <- function(){
   system(paste0("git commit -a -m 'build pm plots for ", as.character(date), "'"))
   
 }
+
+push <- function(){
+  system("git push origin master")
+}
