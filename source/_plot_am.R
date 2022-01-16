@@ -167,7 +167,13 @@ rm(calculate_days, facet_rate, filter_date, map_bins, map_breaks,
 
 commit <- function(){
   
+  auto_update <- usethis::ui_yeah("Do you want to automatically update the remote GitHub repo?")
+  
   system("git add -A")
-  system(paste0("git commit -a -m 'build am plots for ", as.character(values$date+1), "'"))
+  system(paste0("git commit -a -m 'build pm plots for ", as.character(date), "'"))
+  
+  if (auto_update == TRUE){
+    system("git push origin master")
+  }
   
 }
