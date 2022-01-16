@@ -66,9 +66,9 @@ source("source/workflow/03_state_individual_plots.R")
 source("source/workflow/18_stl_zip_plots_v3.R")
 source("source/workflow/19_stl_individual_plots.R")
 
-# if (weekdays(date) %in% c("Saturday", "Sunday") == FALSE){
+if (weekdays(date) %in% c("Saturday", "Sunday") == FALSE){
   source("source/workflow/20_stl_hospital_plots.R")  
-# }
+}
 
 source("source/workflow/22_mo_deaths.R")
 source("source/workflow/23_vaccines.R")
@@ -87,11 +87,13 @@ rm(missing, get_coords,
 
 commit <- function(){
   
+  auto_update <- usethis::ui_yeah("Do you want to automatically update the remote GitHub repo?")
+  
   system("git add -A")
   system(paste0("git commit -a -m 'build pm plots for ", as.character(date), "'"))
   
-}
-
-push <- function(){
-  system("git push origin master")
+  if (auto_update == TRUE){
+    system("git push origin master")
+  }
+  
 }
