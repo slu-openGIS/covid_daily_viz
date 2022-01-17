@@ -170,7 +170,7 @@ commit <- function(){
   auto_update <- usethis::ui_yeah("Do you want to automatically update the remote GitHub repo?")
   
   system("git add -A")
-  system(paste0("git commit -a -m 'build pm plots for ", as.character(date), "'"))
+  system(paste0("git commit -a -m 'build pm plots for ", as.character(values$date+1), "'"))
   
   if (auto_update == TRUE){
     system("git push origin master")

@@ -34,7 +34,7 @@ state_values <- list(
   peak_y = 200, # 400
   current_x = values$state_current_x, # -105
   current_y = values$state_current_y, # 1000
-  current_display = TRUE
+  current_display = FALSE
 )
 
 ## tables
