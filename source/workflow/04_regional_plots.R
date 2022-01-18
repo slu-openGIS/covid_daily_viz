@@ -264,6 +264,39 @@ rm(state_values, os_values)
 
 #===# #===# #===# #===# #===# #===# #===# #===# #===# #===# #===# #===# #===# #===#
 
+region_data %>%
+  filter(region %in% c("Outstate", "Missouri")) %>%
+  select(report_date, region, new_cases) %>%
+  pivot_wider(names_from = "region", values_from = "new_cases") %>%
+  mutate(ratio = Outstate/Missouri*100) %>%
+  filter(report_date >= values$plot_date) %>%
+  mutate(ratio_avg = rollmean(ratio, k = 28, align = "right", fill = NA)) -> region_sub
+
+## define top_val
+top_val <- round_any(x = max(region_sub$ratio_avg, na.rm = TRUE), accuracy = 10, f = ceiling)
+
+## plot
+p <- ggplot() +
+  geom_line(region_sub, mapping = aes(x = report_date, y = ratio_avg, color = "red"), size = 2) +
+  geom_hline(yintercept = 45) +
+  scale_x_date(date_breaks = "1 month", date_labels = "%b") +
+  scale_y_continuous(limits = c(0, top_val), breaks = seq(0, top_val, by = 10)) +
+  labs(
+    title = "Ratio of Outstate Patients",
+    # subtitle = paste0("St. Louis Metropolitan Pandemic Task Force Hospitals\n", min(stl_subset$report_date), " through ", as.character(date)),
+    x = "Date",
+    y = "Percent of All New Cases",
+    caption = "Plot by Christopher Prener, Ph.D."
+  ) +
+  sequoia_theme(base_size = 22, background = "white") +
+  theme(axis.text.x = element_text(angle = values$x_angle))
+
+## save plot
+save_plots(filename = "results/high_res/regional/e_ratio_outstate.png", plot = p, preset = "lg")
+save_plots(filename = "results/low_res/regional/e_ratio_outstate.png", plot = p, preset = "lg", dpi = 72)
+
+#===# #===# #===# #===# #===# #===# #===# #===# #===# #===# #===# #===# #===# #===#
+
 # clean-up ####
 rm(region_data, region_subset, region_points, region_points_subset)
 rm(cols, p)
