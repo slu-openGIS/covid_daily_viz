@@ -34,7 +34,7 @@ state_values <- list(
   peak_y = 200, # 400
   current_x = values$state_current_x, # -105
   current_y = values$state_current_y, # 1000
-  current_display = TRUE
+  current_display = FALSE
 )
 
 ## tables
@@ -84,8 +84,8 @@ kc_values <- list(
     filter(region == "Kansas City") %>% 
     pull(var = case_avg) %>% 
     max(),
-  peak_x = -170, 
-  peak_y = 2600, 
+  peak_x = -120, 
+  peak_y = 800, 
   current_x = values$regional_current_x, 
   current_y = -5000,
   current_display = TRUE
@@ -111,8 +111,8 @@ os_values <- list(
     filter(region == "Outstate") %>% 
     pull(var = case_avg) %>% 
     max(),
-  peak_x = -170, 
-  peak_y = 2600, 
+  peak_x = -120, 
+  peak_y = 800, 
   current_x = values$regional_current_x, 
   current_y = -5000,
   current_display = FALSE
