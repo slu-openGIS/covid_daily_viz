@@ -114,7 +114,7 @@ library(scales)         # plot scales
 library(zoo)            # rolling means
 
 ## functions
-# source("source/functions/calculate_days.R")    # calculate days since infections
+source("source/functions/calculate_days.R")    # calculate days since infections
 source("source/functions/map_breaks.R")        # creating map beaks
 source("source/functions/plots.R")             # standardized plots
 source("source/functions/round_any.R")         # rounding
