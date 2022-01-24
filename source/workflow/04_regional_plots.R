@@ -115,7 +115,7 @@ os_values <- list(
   peak_y = 800, 
   current_x = values$regional_current_x, 
   current_y = -7000,
-  current_display = TRUE
+  current_display = FALSE
 )
 
 ## tables
