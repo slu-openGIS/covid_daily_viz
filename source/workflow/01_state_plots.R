@@ -61,7 +61,7 @@ state_subset <- filter(state_data, report_date >= values$plot_date) %>%
   filter(report_date < as.Date("2021-12-31") | report_date >= as.Date("2022-01-03"))
 
 ## define top_val
-top_val <- round_any(x = max(state_subset$case_avg_rate), accuracy = 20, f = ceiling)
+top_val <- round_any(x = max(state_subset$case_avg_rate), accuracy = 50, f = ceiling)
 
 ## create factors
 state_subset <- mutate(state_subset, factor_var = fct_reorder2(state, report_date, case_avg_rate))
@@ -71,7 +71,7 @@ p <- facet_rate(state_subset,
                 type = "state", 
                 pal = cols, 
                 x_breaks = values$date_breaks_facet,
-                y_breaks = 20,
+                y_breaks = 50,
                 y_upper_limit = top_val,
                 highlight = unique(state_subset$state),
                 plot_date = values$plot_date,
