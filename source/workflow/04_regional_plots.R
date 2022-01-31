@@ -111,8 +111,8 @@ os_values <- list(
     filter(region == "Outstate") %>% 
     pull(var = case_avg) %>% 
     max(),
-  peak_x = -120, 
-  peak_y = 800, 
+  peak_x = -140, 
+  peak_y = -800, 
   current_x = values$regional_current_x, 
   current_y = -7000,
   current_display = TRUE
