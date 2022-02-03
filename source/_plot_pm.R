@@ -60,7 +60,7 @@ source("source/functions/sequoia_theme.R")     # theme for plots and maps
 # update plots
 ## overview plots
 # source("source/workflow/02_state_test_plots.R")
-source("source/workflow/03_state_individual_plots.R")
+# source("source/workflow/03_state_individual_plots.R")
 
 # regional plots
 source("source/workflow/18_stl_zip_plots_v3.R")
@@ -73,7 +73,7 @@ if (weekdays(date) %in% c("Saturday", "Sunday") == FALSE){
 source("source/workflow/22_mo_deaths.R")
 source("source/workflow/23_vaccines.R")
 source("source/workflow/24_district_vaccines.R")
-source("source/workflow/25_vaccination_progress.R")
+# source("source/workflow/25_vaccination_progress.R")
 
 #===# #===# #===# #===# #===# #===# #===# #===# #===# #===# #===# #===# #===# #===#
 
