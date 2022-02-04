@@ -58,7 +58,7 @@ stl_values <- list(
     pull(var = case_avg) %>% 
     max(),
   peak_x = -120, 
-  peak_y = 800, 
+  peak_y = 2000, 
   current_x = values$regional_current_x, 
   current_y = -8000,
   current_display = TRUE
@@ -85,7 +85,7 @@ kc_values <- list(
     pull(var = case_avg) %>% 
     max(),
   peak_x = -120, 
-  peak_y = 800, 
+  peak_y = 5000, 
   current_x = values$regional_current_x, 
   current_y = -5000,
   current_display = TRUE
@@ -111,8 +111,8 @@ os_values <- list(
     filter(region == "Outstate") %>% 
     pull(var = case_avg) %>% 
     max(),
-  peak_x = -140, 
-  peak_y = -800, 
+  peak_x = -160, 
+  peak_y = 1000, 
   current_x = values$regional_current_x, 
   current_y = -7000,
   current_display = TRUE
