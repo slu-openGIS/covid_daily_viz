@@ -32,7 +32,7 @@ values <- list(
   date_breaks_long = "1 month",
   date_breaks_log = 50,
   date_breaks_facet = "4 months",
-  date_breaks_3days = "1 week", # 7 days
+  date_breaks_3days = "7 days", #  1 week
   x_angle = 25,
   
   county_log_max = 100000,
@@ -46,7 +46,7 @@ values <- list(
   
   regional_current_x = 0,
   state_current_x = -160,
-  state_current_y = -1000,
+  state_current_y = -600,
   
   caption_text = "Plot by Christopher Prener, Ph.D.\nData via the New York Times COVID-19 Project",
   caption_text_census = "Plot by Christopher Prener, Ph.D.\nData via the New York Times COVID-19 Project and the U.S. Census Bureau",
