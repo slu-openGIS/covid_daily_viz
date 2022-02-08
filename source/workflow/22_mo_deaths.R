@@ -52,7 +52,7 @@ p <- ggplot() +
   geom_point(death_points, mapping = aes(x = date, y = avg, color = factor_var), 
              size = 4, show.legend = FALSE) +
   scale_colour_manual(values = cols, name = "Measure") +
-  scale_x_date(date_breaks = "1 month", date_labels = "%b") +
+  scale_x_date(date_breaks = "2 months", date_labels = "%b") +
   scale_y_continuous(limits = c(0, top_val), breaks = seq(0, top_val, by = 5)) + 
   labs(
     title = "COVID-19 Mortality in Missouri, Reported vs. Actual",
