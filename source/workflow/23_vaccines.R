@@ -12,7 +12,7 @@ mo_sf <- st_read("data/MO_HEALTH_Covid_Tracking/data/county/daily_snapshot_mo_va
 # map first dose_rate
 ## create breaks
 mo_sf <- map_breaks(mo_sf, var = "initiated_rate", newvar = "map_breaks",
-                    style = "fisher", classes = 5, dig_lab = 3)
+                    style = "fisher", classes = 4, dig_lab = 3)
 
 ## create map
 p <- ggplot(data = mo_sf, mapping = aes(fill = map_breaks)) +
