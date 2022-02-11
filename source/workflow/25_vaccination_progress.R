@@ -2,6 +2,8 @@
 # load data
 pop <- read_csv("data/MO_HEALTH_Covid_Tracking/data/source/state_pop.csv")
 
+covid_totals <- read_csv(paste0("data/MO_HEALTH_Covid_Tracking/data/source/mo_daily_vaccines/mo_total_vaccines_", date, ".csv"))
+
 # =============================================================================
 
 ## tidy values
@@ -64,54 +66,54 @@ ggsave(filename = "results/low_res/state/r_vaccine_compare.png", plot = p,
 
 # =============================================================================
 
-rm(pct)
+rm(pct, covid_totals)
 rm(p)
 
 # =============================================================================
 
-initiated_label <- paste0("Initiated Vaccinations (n = ", formatC(sum(covid_totals$initiated), format="d", big.mark=","), ")")
-completed_label <- paste0("Completed Vaccinations (n = ", formatC(sum(covid_totals$completed), format="d", big.mark=","), ")")
+# initiated_label <- paste0("Initiated Vaccinations (n = ", formatC(sum(covid_totals$initiated), format="d", big.mark=","), ")")
+# completed_label <- paste0("Completed Vaccinations (n = ", formatC(sum(covid_totals$completed), format="d", big.mark=","), ")")
 
-covid_totals %>% 
-  select(-c(initiated_pct, completed_pct)) %>%
-  pivot_longer(cols = c("initiated", "completed"), names_to = "value", values_to = "count") %>%
-  mutate(value = ifelse(value == "initiated", "Initiated", "Completed")) %>%
-  mutate(category = fct_relevel(category, "Missouri, Known Jurisdiction", "Missouri, Unknown Jurisdiction", "Out-of-State", "No Address Given")) %>%
+# covid_totals %>% 
+#  select(-c(initiated_pct, completed_pct)) %>%
+#  pivot_longer(cols = c("initiated", "completed"), names_to = "value", values_to = "count") %>%
+#  mutate(value = ifelse(value == "initiated", "Initiated", "Completed")) %>%
+#  mutate(category = fct_relevel(category, "Missouri, Known Jurisdiction", "Missouri, Unknown Jurisdiction", "Out-of-State", "No Address Given")) %>%
   # mutate(category = fct_relevel(category, "No Address Given", "Out-of-State", "Missouri, Unknown Jurisdiction", "Missouri, Known Jurisdiction")) %>%
-  mutate(value = ifelse(value == "Initiated", initiated_label, completed_label)) %>%
-  mutate(value = fct_relevel(value, initiated_label, completed_label)) -> covid_totals_long
+#  mutate(value = ifelse(value == "Initiated", initiated_label, completed_label)) %>%
+#  mutate(value = fct_relevel(value, initiated_label, completed_label)) -> covid_totals_long
 
-p <- covid_totals_long %>%
-  mutate(count_2 = round_any(count/10000, accuracy = 1, f = ceiling)) %>%
-  ggplot(., aes(fill=category, values=count_2)) +
-  geom_waffle(color = "white", size=.75, n_rows = 6) +
-  scale_fill_manual(values = c(brewer.pal(n = 5, name = "Purples")[5], 
-                               brewer.pal(n = 5, name = "Purples")[2], 
-                               brewer.pal(n = 5, name = "Greens")[2],
-                               brewer.pal(n = 5, name = "Reds")[2]),
-                    name = "Geography") +
-  facet_wrap(~value, ncol=1)  +
-  scale_x_discrete(expand=c(0,0)) +
-  scale_y_discrete(expand=c(0,0)) +
-  coord_equal() +
-  labs(
-    title = "Geographic Breakdown of Missouri Vaccination Counts",
-    subtitle = paste0("Current as of ", as.character(date),"\nEach box is equivalent to 10,000 individuals"),
-    caption = "Plot by Christopher Prener, Ph.D.\nData via the State of Missouri\nThis plot does not capture Missouri residents who recieve vaccinations in another state or \n    who recieve vaccinations at a Federal facility such as a Veterans Administration hospital or clinic.\nCounts are rounded up to the nearest 10,000 individuals to generate boxes for this plot.\nMissouri, Unknown jurisdiction refers to partially complete addresses where Missouri was listed for state."
-  ) +
-  sequoia_theme(base_size = 22, background = "white", legend_size = 1) +
-  theme(
-    legend.position = "bottom",
-    legend.justification = "left",
-    strip.background = element_rect(fill="white"),
-    strip.text = element_text(angle = 0, hjust = 0),
-    panel.spacing = unit(2, "lines")
-  ) +
-  guides(fill = guide_legend(nrow = 1, byrow = TRUE))
+# p <- covid_totals_long %>%
+#  mutate(count_2 = round_any(count/10000, accuracy = 1, f = ceiling)) %>%
+#  ggplot(., aes(fill=category, values=count_2)) +
+#  geom_waffle(color = "white", size=.75, n_rows = 6) +
+#  scale_fill_manual(values = c(brewer.pal(n = 5, name = "Purples")[5], 
+#                               brewer.pal(n = 5, name = "Purples")[2], 
+#                               brewer.pal(n = 5, name = "Greens")[2],
+#                               brewer.pal(n = 5, name = "Reds")[2]),
+#                    name = "Geography") +
+#  facet_wrap(~value, ncol=1)  +
+#  scale_x_discrete(expand=c(0,0)) +
+#  scale_y_discrete(expand=c(0,0)) +
+#  coord_equal() +
+#  labs(
+#    title = "Geographic Breakdown of Missouri Vaccination Counts",
+#    subtitle = paste0("Current as of ", as.character(date),"\nEach box is equivalent to 10,000 individuals"),
+#    caption = "Plot by Christopher Prener, Ph.D.\nData via the State of Missouri\nThis plot does not capture Missouri residents who recieve vaccinations in another state or \n    who recieve vaccinations at a Federal facility such as a Veterans Administration hospital or clinic.\nCounts are rounded up to the nearest 10,000 individuals to generate boxes for this plot.\nMissouri, Unknown jurisdiction refers to partially complete addresses where Missouri was listed for state."
+#  ) +
+#  sequoia_theme(base_size = 22, background = "white", legend_size = 1) +
+#  theme(
+#    legend.position = "bottom",
+#    legend.justification = "left",
+#    strip.background = element_rect(fill="white"),
+#    strip.text = element_text(angle = 0, hjust = 0),
+#    panel.spacing = unit(2, "lines")
+#  ) +
+#  guides(fill = guide_legend(nrow = 1, byrow = TRUE))
 
-save_plots(filename = "results/high_res/state/s_vaccine_geography.png", plot = p, preset = "lg")
-save_plots(filename = "results/low_res/state/s_vaccine_geography.png", plot = p, preset = "lg", dpi = 72)
+# save_plots(filename = "results/high_res/state/s_vaccine_geography.png", plot = p, preset = "lg")
+# save_plots(filename = "results/low_res/state/s_vaccine_geography.png", plot = p, preset = "lg", dpi = 72)
 
 # =============================================================================
 
-rm(p, covid_totals, covid_totals_long, covid_totals_pct, initiated_label, completed_label)
+# rm(p, covid_totals, covid_totals_long, covid_totals_pct, initiated_label, completed_label)

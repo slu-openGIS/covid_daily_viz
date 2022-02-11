@@ -79,8 +79,7 @@ source("source/workflow/25_vaccination_progress.R")
 
 # clean-up
 rm(map_bins, map_breaks, round_any, save_plots, sequoia_theme, x_angle)
-rm(missing, get_coords, 
-   caption_text_tests, caption_text_tests_census, test_date_breaks, 
+rm(get_coords, caption_text_tests, caption_text_tests_census, test_date_breaks, 
    total_test_date_breaks)
 
 #===# #===# #===# #===# #===# #===# #===# #===# #===# #===# #===# #===# #===# #===#
