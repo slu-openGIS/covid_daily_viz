@@ -58,7 +58,7 @@ stl_values <- list(
     pull(var = case_avg) %>% 
     max(),
   peak_x = -120, 
-  peak_y = 2000, 
+  peak_y = values$stl_peak_y, 
   current_x = values$regional_current_x, 
   current_y = -8000,
   current_display = TRUE
@@ -85,7 +85,7 @@ kc_values <- list(
     pull(var = case_avg) %>% 
     max(),
   peak_x = -120, 
-  peak_y = 5000, 
+  peak_y = values$kc_peak_y, 
   current_x = values$regional_current_x, 
   current_y = -5000,
   current_display = TRUE
@@ -112,7 +112,7 @@ os_values <- list(
     pull(var = case_avg) %>% 
     max(),
   peak_x = -160, 
-  peak_y = 1000, 
+  peak_y = values$os_peak_y, 
   current_x = values$regional_current_x, 
   current_y = -7000,
   current_display = TRUE

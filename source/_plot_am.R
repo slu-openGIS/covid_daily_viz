@@ -46,7 +46,10 @@ values <- list(
   
   regional_current_x = 0,
   state_current_x = -160,
-  state_current_y = 1000,
+  state_current_y = 7000,
+  stl_peak_y = -1000,
+  kc_peak_y = 1000,
+  os_peak_y = -1000,
   
   caption_text = "Plot by Christopher Prener, Ph.D.\nData via the New York Times COVID-19 Project",
   caption_text_census = "Plot by Christopher Prener, Ph.D.\nData via the New York Times COVID-19 Project and the U.S. Census Bureau",
