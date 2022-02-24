@@ -257,7 +257,7 @@ cumulative_rate <- function(.data, point_data, type, subtype = NULL, plot_values
   
   if (type == "state"){
     
-    plot_values$county_rate_val <- 1000
+    plot_values$county_rate_val <- 2000
     
   }
   

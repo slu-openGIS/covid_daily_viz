@@ -35,7 +35,7 @@ county_focal <- c("20209", "20103", "29511", "29107", "29095", "20091", "29047",
 
 # define top_val new case rate plots
 top_case <- 50
-top_case_3wk <- 50
+top_case_3wk <- 25
 
 ## create points
 county_points <- filter(county_data, report_date == values$date) %>%
@@ -211,7 +211,7 @@ save_plots(filename = "results/low_res/kc_metro/g_mortality_map.png", plot = p, 
 county_subset <- filter(county_data, report_date >= values$plot_date)
 
 ## define top_val
-top_val <- round_any(x = max(county_subset$mortality_rate), accuracy = .2, f = ceiling)
+top_val <- round_any(x = max(county_subset$mortality_rate), accuracy = .25, f = ceiling)
 
 ## create factors
 county_subset <- mutate(county_subset, factor_var = fct_reorder2(county, report_date, mortality_rate))
@@ -225,7 +225,7 @@ p <- ggplot() +
   gghighlight(geoid %in% county_focal, use_direct_label = FALSE, use_group_by = FALSE) +
   scale_colour_manual(values = cols, name = "County") +
   scale_x_date(date_breaks = values$date_breaks, date_labels = "%b") +
-  scale_y_continuous(limits = c(0,top_val), breaks = seq(0, top_val, by = .2)) +
+  scale_y_continuous(limits = c(0,top_val), breaks = seq(0, top_val, by = .25)) +
   labs(
     title = "Reported COVID-19 Mortality in Metro Kansas City",
     subtitle = paste0(as.character(values$plot_date), " through ", as.character(values$date)),

@@ -27,7 +27,7 @@ state_points <- filter(state_data, report_date == values$date)
 state_subset <- filter(state_data, report_date >= values$plot_date)
 
 ## define top_val
-top_val <- round_any(x = max(state_subset$case_rate), accuracy = 1000, f = ceiling)
+top_val <- round_any(x = max(state_subset$case_rate), accuracy = 2000, f = ceiling)
 
 ## create factors
 state_subset <- mutate(state_subset, factor_var = fct_reorder2(state, report_date, case_rate))
