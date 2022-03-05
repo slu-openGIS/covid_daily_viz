@@ -46,7 +46,7 @@ values <- list(
   
   regional_current_x = 0,
   state_current_x = -180,
-  state_current_y = 3000,
+  state_current_y = 3500,
   stl_peak_y = 1000,
   kc_peak_y = 3000,
   os_peak_y = 1000,
