@@ -23,7 +23,7 @@ county_focal <- c("29189", "29511", regional_geoids$st_jo)
 
 # define top_val new case rate plots
 top_case <- 50
-top_case_3wk <- 50
+top_case_3wk <- 20
 
 # =============================================================================
 
