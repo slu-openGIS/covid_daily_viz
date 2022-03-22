@@ -32,7 +32,7 @@ stl_hosp %>%
 avg_line <- filter(stl_subset, category == "7-day Average")
 
 ## create points
-hosp_points <- filter(stl_subset, report_date == date-2)
+hosp_points <- filter(stl_subset, report_date == hosp_date-2)
 
 ## create factors
 stl_subset <- mutate(stl_subset, factor_var = fct_reorder2(category, report_date, value))
@@ -49,7 +49,7 @@ p <- ggplot() +
   scale_y_continuous(limits = c(0, top_val), breaks = seq(0, top_val, by = 10)) + 
   labs(
     title = "New COVID-19 Hospitalizations in Metro St. Louis",
-    subtitle = paste0("St. Louis Metropolitan Pandemic Task Force Hospitals\n", min(stl_subset$report_date), " through ", as.character(date-2)),
+    subtitle = paste0("St. Louis Metropolitan Pandemic Task Force Hospitals\n", min(stl_subset$report_date), " through ", as.character(hosp_date-2)),
     x = "Date",
     y = "New Patients",
     caption = "Plot by Christopher Prener, Ph.D.\nData via the St. Louis Metro Parademic Task Force"
@@ -82,7 +82,7 @@ stl_hosp %>%
 avg_line <- filter(stl_subset, category == "7-day Average")
 
 ## create points
-hosp_points <- filter(stl_subset, report_date == date)
+hosp_points <- filter(stl_subset, report_date == hosp_date)
 
 ## create factors
 stl_subset <- mutate(stl_subset, factor_var = fct_reorder2(category, report_date, value))
@@ -99,7 +99,7 @@ p <- ggplot() +
   scale_y_continuous(limits = c(0, top_val), breaks = seq(0, top_val, by = 100)) + 
   labs(
     title = "Total COVID-19 Hospitalizations in Metro St. Louis",
-    subtitle = paste0("St. Louis Metropolitan Pandemic Task Force Hospitals\n", min(stl_subset$report_date), " through ", as.character(date)),
+    subtitle = paste0("St. Louis Metropolitan Pandemic Task Force Hospitals\n", min(stl_subset$report_date), " through ", as.character(hosp_date)),
     x = "Date",
     y = "Total Patients",
     caption = "Plot by Christopher Prener, Ph.D.\nData via the St. Louis Metro Parademic Task Force"
@@ -132,7 +132,7 @@ stl_hosp %>%
 avg_line <- filter(stl_subset, category == "7-day Average")
 
 ## create points
-hosp_points <- filter(stl_subset, report_date == date)
+hosp_points <- filter(stl_subset, report_date == hosp_date)
 
 ## create factors
 stl_subset <- mutate(stl_subset, factor_var = fct_reorder2(category, report_date, value))
@@ -149,7 +149,7 @@ p <- ggplot() +
   scale_y_continuous(limits = c(0, top_val), breaks = seq(0, top_val, by = 25)) + 
   labs(
     title = "Total COVID-19 ICU Patients in Metro St. Louis",
-    subtitle = paste0("St. Louis Metropolitan Pandemic Task Force Hospitals\n", min(stl_subset$report_date), " through ", as.character(date)),
+    subtitle = paste0("St. Louis Metropolitan Pandemic Task Force Hospitals\n", min(stl_subset$report_date), " through ", as.character(hosp_date)),
     x = "Date",
     y = "Total ICU Patients",
     caption = "Plot by Christopher Prener, Ph.D.\nData via the St. Louis Metro Parademic Task Force"
@@ -182,7 +182,7 @@ stl_hosp %>%
 avg_line <- filter(stl_subset, category == "7-day Average")
 
 ## create points
-hosp_points <- filter(stl_subset, report_date == date)
+hosp_points <- filter(stl_subset, report_date == hosp_date)
 
 ## create factors
 stl_subset <- mutate(stl_subset, factor_var = fct_reorder2(category, report_date, value))
@@ -199,7 +199,7 @@ p <- ggplot() +
   scale_y_continuous(limits = c(0, top_val), breaks = seq(0, top_val, by = 20)) + 
   labs(
     title = "Total COVID-19 Ventilated Patients in Metro St. Louis",
-    subtitle = paste0("St. Louis Metropolitan Pandemic Task Force Hospitals\n", min(stl_subset$report_date), " through ", as.character(date)),
+    subtitle = paste0("St. Louis Metropolitan Pandemic Task Force Hospitals\n", min(stl_subset$report_date), " through ", as.character(hosp_date)),
     x = "Date",
     y = "Total Ventilated Patients",
     caption = "Plot by Christopher Prener, Ph.D.\nData via the St. Louis Metro Parademic Task Force"
@@ -232,7 +232,7 @@ stl_hosp %>%
 avg_line <- filter(stl_subset, category == "7-day Average")
 
 ## create points
-hosp_points <- filter(stl_subset, report_date == date)
+hosp_points <- filter(stl_subset, report_date == hosp_date)
 
 ## create factors
 stl_subset <- mutate(stl_subset, factor_var = fct_reorder2(category, report_date, value))
@@ -249,7 +249,7 @@ p <- ggplot() +
   scale_y_continuous(limits = c(0, top_val), breaks = seq(0, top_val, by = 2)) + 
   labs(
     title = "Total COVID-19 Deaths for In-patients in Metro St. Louis",
-    subtitle = paste0("St. Louis Metropolitan Pandemic Task Force Hospitals\n", min(stl_subset$report_date), " through ", as.character(date)),
+    subtitle = paste0("St. Louis Metropolitan Pandemic Task Force Hospitals\n", min(stl_subset$report_date), " through ", as.character(hosp_date)),
     x = "Date",
     y = "Total Deaths",
     caption = "Plot by Christopher Prener, Ph.D.\nData via the St. Louis Metro Parademic Task Force"
@@ -293,7 +293,7 @@ p <- ggplot() +
   scale_y_continuous(limits = c(0, top_val), breaks = seq(0, top_val, by = 5)) +
   labs(
     title = "COVID-19 Critical Care Patient Ratios in Metro St. Louis",
-    subtitle = paste0("St. Louis Metropolitan Pandemic Task Force Hospitals\n", min(stl_subset$report_date), " through ", as.character(date)),
+    subtitle = paste0("St. Louis Metropolitan Pandemic Task Force Hospitals\n", min(stl_subset$report_date), " through ", as.character(hosp_date)),
     x = "Date",
     y = "Percent of All In-Patients",
     caption = "Plot by Christopher Prener, Ph.D.\nData via the St. Louis Metro Parademic Task Force"
@@ -357,7 +357,7 @@ p <- ggplot() +
   facet_wrap(vars(facet), nrow = 3) + 
   labs(
     title = "COVID-19 Pediatric Patients in Metro St. Louis",
-    subtitle = paste0("St. Louis Metropolitan Pandemic Task Force Hospitals\n", min(stl_subset$report_date), " through ", as.character(date)),
+    subtitle = paste0("St. Louis Metropolitan Pandemic Task Force Hospitals\n", min(stl_subset$report_date), " through ", as.character(hosp_date)),
     x = "Date",
     y = "Total Pediatric Patients",
     caption = "Plot by Christopher Prener, Ph.D.\nData via the St. Louis Metro Parademic Task Force"
@@ -410,7 +410,7 @@ p <- ggplot() +
   facet_wrap(vars(facet), nrow = 3) + 
   labs(
     title = "COVID-19 Pediatric ICU Patients in Metro St. Louis",
-    subtitle = paste0("St. Louis Metropolitan Pandemic Task Force Hospitals\n", min(stl_subset$report_date), " through ", as.character(date)),
+    subtitle = paste0("St. Louis Metropolitan Pandemic Task Force Hospitals\n", min(stl_subset$report_date), " through ", as.character(hosp_date)),
     x = "Date",
     y = "Pediatric ICU Patients",
     caption = "Plot by Christopher Prener, Ph.D.\nData via the St. Louis Metro Parademic Task Force"
@@ -425,5 +425,5 @@ save_plots(filename = "results/low_res/stl_metro/t_icu_peds.png", plot = p, pres
 # =============================================================================
 
 # clean-up
-rm(stl_hosp, stl_subset, hosp_points, avg_line)
+rm(stl_hosp, stl_subset, hosp_points, avg_line, hosp_date)
 rm(top_val, p, cols, pal)

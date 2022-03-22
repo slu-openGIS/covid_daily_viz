@@ -29,6 +29,22 @@ caption_text_census_map <- "Plot by Christopher Prener, Ph.D.\nData via the Stat
 
 #===# #===# #===# #===# #===# #===# #===# #===# #===# #===# #===# #===# #===# #===#
 
+# qa promts ####
+
+## confirm St. Louis Pandemic Task Force data
+hospital_update <- usethis::ui_yeah("Have you manually updated the Pandemic Task Force data from the latest slides?")
+
+if (hospital_update == FALSE){
+  if (weekdays(date) == "Tuesday"){
+    hospital_update <- usethis::ui_yeah("Did you manually update the Pandemic Task Force data yesterday?")
+    hosp_date <- date-1 
+  }
+} else if (hospital_update == TRUE){
+  hosp_date <- date
+}
+
+#===# #===# #===# #===# #===# #===# #===# #===# #===# #===# #===# #===# #===# #===#
+
 # dependencies
 
 ## packages
@@ -66,7 +82,7 @@ source("source/functions/sequoia_theme.R")     # theme for plots and maps
 source("source/workflow/18_stl_zip_plots_v3.R")
 source("source/workflow/19_stl_individual_plots.R")
 
-if (weekdays(date) %in% c("Saturday", "Sunday") == FALSE){
+if (hospital_update == TRUE){
   source("source/workflow/20_stl_hospital_plots.R")  
 }
 

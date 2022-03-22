@@ -23,7 +23,7 @@ county_focal <- c("29189", "29511", regional_geoids$ozark_mtns)
 
 # define top_val new case rate plots
 top_case <- 50
-top_case_3wk <- 10
+top_case_3wk <- 5
 
 round_peak <- 350
 custom_caption <- values$caption_text_census
