@@ -14,7 +14,7 @@ system("git submodule update --remote")
 #===# #===# #===# #===# #===# #===# #===# #===# #===# #===# #===# #===# #===# #===#
 
 # UPDATE date value
-date <- Sys.Date()
+date <- Sys.Date()-1
 
 # define first date for plotting
 test_date_breaks <- "20 days"
