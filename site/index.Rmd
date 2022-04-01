@@ -73,16 +73,14 @@ load(here::here("data", "MO_HEALTH_Covid_Tracking", "data", "source", "hhs",
                 "last_update.rda"))
 ```
 
-<div class="note">
-<b>The site was last updated on `r Sys.Date()`. All county, metro, and state level morbidity and mortality data are current as of `r Sys.Date()-1`. ZIP code, disparity, and St. Louis hospitalization data are all current as of `r Sys.Date()`. Hospitalization data at the regional and metro levels are all current as of `r last_update$last_date`. </b>
+<div class="alert">
+<b>After two years of COVID-19 tracking work, I have decided to end my project. Data collection is now frozen at 2022-03-31. This change does not reflect an assessment that COVID-19 is now behind us. On the contrary, I remain very concerned about the risk that new variants pose. However, changes that DHSS has made to their reporting posture have made continuing my work far more challenging. I had initially planned to end the project on 2022-05-09. <a href="https://health.mo.gov/living/healthcondiseases/communicable/novel-coronavirus/data/public-health/" target="_blank">DHSS's new dashboard</a> will continue to be a resource for the state but has greatly complicated the process I go through to update my own data.
+
+I will be gradually transitioning some elements of this site to an archive of Missouri's COVID-19 data over the next six weeks, so you may notice some changes if you return. However, I do not plan to update the underlying data sources again. Thank you so much to those of you who became regular visitors over the last two years. It's been an absolute privilege to help my neighbors navigate the first two years of the pandemic. Be well! -Chris </b>
 </div>
 <br>
 
-Welcome to <a href="https://chris-prener.github.io" target="_blank">Chris Prener's</a> tracking site for the SARS-CoV-2 pandemic in Missouri. This site is updated nightly using data from a variety of federal, state, and local data sources as well as the <a href="https://nytimes.com" target="_blank">New York Times'</a> <a href="https://github.com/nytimes/covid-19-data" target="_blank">COVID-19 Project</a>. Chris also posts <a href="https://twitter.com/chrisprener" target="_blank">Twitter</a> threads on Tuesday and Thursday evenings breaking down current trends in Missouri. If you are new to the site, please read the [About page](about.html) for an overview of these data.
-
-Chris also emails out a weekly round-up of COVID-19 trends for Missouri. These weekly newsletters, named "River City Data," also feature some exclusive content, including short interviews with COVID-19 experts, health care providers, and others who have insight into the pandemic. Sign up below:
-
-<iframe src="https://chrisprener.substack.com/embed" width="480" height="320" style="border:1px solid #EEE; background:white;" frameborder="0" scrolling="no"></iframe>
+Welcome to <a href="https://chris-prener.github.io" target="_blank">Chris Prener's</a> tracking site for the SARS-CoV-2 pandemic in Missouri. This site was updated nightly using data from a variety of federal, state, and local data sources as well as the <a href="https://nytimes.com" target="_blank">New York Times'</a> <a href="https://github.com/nytimes/covid-19-data" target="_blank">COVID-19 Project</a>. If you are new to the site, please read the [About page](about.html) for an overview of these data.
 
 <br>
 
